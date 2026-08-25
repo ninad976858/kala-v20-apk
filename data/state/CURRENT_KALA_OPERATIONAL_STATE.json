@@ -1,0 +1,11 @@
+{
+  "identity": "60e8edbc",
+  "codex_id": "KALA-VISHWAROOPAM",
+  "status": "FROZEN_CONSTITUTION_ACCEPTED",
+  "constitution_hash": "FROZEN_2026_05_11",
+  "real_revenue": 0,
+  "sim_revenue": 0,
+  "duplicates_cleaned": "572 -> 37",
+  "last_heartbeat": "2026-05-11T00:00:00Z",
+  "note": "Single source of truth. Do not edit manually."
+}

@@ -1,0 +1,39 @@
+name: Build KALA Self-Building APK
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Buildozer + Accept Licenses + Pin Build-Tools 33.0.2
+        run: |
+          sudo apt update
+          sudo apt install -y openjdk-17-jdk zip unzip wget
+          pip install buildozer cython==0.29.33
+          mkdir -p ~/.android
+          echo "y" > ~/.android/repositories.cfg
+          yes | sdkmanager --licenses || true
+          sdkmanager --install "build-tools;33.0.2" "platforms;android-33" || true
+          sdkmanager --list | grep build-tools
+
+      - name: Build APK with engines + 485 beats inside
+        run: |
+          buildozer android debug
+        env:
+          BUILDOZER_WARN_ON_ROOT: 0
+
+      - name: Upload KALA Self-Building APK 485 beats
+        uses: actions/upload-artifact@v4
+        with:
+          name: KALA-V20-SELF-BUILDING-485
+          path: bin/*.apk

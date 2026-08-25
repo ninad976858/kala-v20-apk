@@ -1,0 +1,14 @@
+{
+  "identity_hash": "60e8edbc",
+  "purpose": "ZERO->LIFE->WORLD->GREEN",
+  "heartbeat_count": 1,
+  "model_version": "M0",
+  "model_params": {
+    "risk_tolerance": 0.6,
+    "exploration_rate": 0.4
+  },
+  "hash_chain": [
+    "dfac389b466c6e0deb4773b4fc224efc9b5f0e4dbaa339dc7e5269b9c3ae77bd"
+  ],
+  "start_time": 1787579219.740512
+}
