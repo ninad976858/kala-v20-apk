@@ -8,7 +8,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Install SDK + 33.0.2 + 37.0.0 + licenses + old tools path fix
+      - name: Install SDK + fix tools/bin
         run: |
           sudo apt-get update
           sudo apt-get install -y openjdk-17-jdk python3-pip zip unzip
@@ -33,9 +33,7 @@ jobs:
           mkdir -p $HOME/.buildozer/android/platform
           rm -rf $HOME/.buildozer/android/platform/android-sdk
           ln -sf $ANDROID_HOME $HOME/.buildozer/android/platform/android-sdk
-          ls $ANDROID_HOME/tools/bin/sdkmanager
-          ls $ANDROID_HOME/build-tools/33.0.2/aidl
-      - name: Build APK
+      - name: Build APK with log capture
         run: |
           export ANDROID_HOME=$HOME/android-sdk
           export ANDROID_SDK_ROOT=$ANDROID_HOME
@@ -43,8 +41,21 @@ jobs:
           mkdir -p $HOME/.buildozer/android/platform
           rm -rf $HOME/.buildozer/android/platform/android-sdk
           ln -sf $ANDROID_HOME $HOME/.buildozer/android/platform/android-sdk
-          buildozer android debug
-      - uses: actions/upload-artifact@v4
+          buildozer android debug --verbose 2>&1 | tee build_full.log || true
+          echo "===ERROR EXTRACT===" > build_error.txt
+          grep -i -A10 -B5 "FAILED\|Error\|Aidl\|license\|Traceback\|Exception" build_full.log | tail -n 300 >> build_error.txt || true
+          cat build_error.txt
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: |
+            build_full.log
+            build_error.txt
+      - name: Upload APK if exists
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: KALA-V20-SELF-BUILDING-485
           path: bin/*.apk
