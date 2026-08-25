@@ -1,24 +1,20 @@
 [app]
 title = KALA VISHWAROOPAM V20
 package.name = kalavishwaroopam
-package.domain = com.kala.vishwaroopam
-source.dir =.
-source.include_patterns = app/*,data/*,*.py,*.json,*.jsonl,*.md,*.txt,*.spec
+package.domain = org.kala.v20
+source.dir = .
+source.include_exts = py,png,jpg,kv,atlas,json,txt,md
 version = 20.0
-requirements = python3,kivy,requests,urllib3,charset-normalizer,certifi
+requirements = python3,kivy==2.3.0,requests
 orientation = portrait
-
-[buildozer]
-log_level = 2
-warn_on_root = 0
-
-[app:android]
+fullscreen = 0
+android.permissions = INTERNET,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,ACCESS_NETWORK_STATE
 android.api = 33
 android.minapi = 21
 android.ndk = 25b
-android.sdk = 33
-android.build_tools_version = 33.0.2
+android.sdk_path = /home/runner/android-sdk
 android.accept_sdk_license_agreement = True
-android.permissions = INTERNET,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
+android.build_tools_version = 33.0.2
 p4a.bootstrap = sdl2
-p4a.local_recipes =
+[buildozer]
+log_level = 2
