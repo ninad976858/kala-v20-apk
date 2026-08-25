@@ -8,10 +8,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Install SDK + fix tools/bin
+      - name: Install SDK + libffi deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-17-jdk python3-pip zip unzip
+          sudo apt-get install -y openjdk-17-jdk python3-pip zip unzip autoconf automake libtool libltdl-dev pkg-config
           pip3 install --upgrade pip
           pip3 install buildozer cython==0.29.33
           export ANDROID_HOME=$HOME/android-sdk
@@ -33,7 +33,7 @@ jobs:
           mkdir -p $HOME/.buildozer/android/platform
           rm -rf $HOME/.buildozer/android/platform/android-sdk
           ln -sf $ANDROID_HOME $HOME/.buildozer/android/platform/android-sdk
-      - name: Build APK with log capture
+      - name: Build APK single arch
         run: |
           export ANDROID_HOME=$HOME/android-sdk
           export ANDROID_SDK_ROOT=$ANDROID_HOME
@@ -43,7 +43,7 @@ jobs:
           ln -sf $ANDROID_HOME $HOME/.buildozer/android/platform/android-sdk
           buildozer android debug --verbose 2>&1 | tee build_full.log || true
           echo "===ERROR EXTRACT===" > build_error.txt
-          grep -i -A10 -B5 "FAILED\|Error\|Aidl\|license\|Traceback\|Exception" build_full.log | tail -n 300 >> build_error.txt || true
+          grep -i -A10 -B5 "FAILED\|Error\|Aidl\|LT_SYS\|Traceback\|Exception" build_full.log | tail -n 400 >> build_error.txt || true
           cat build_error.txt
       - name: Upload logs
         if: always()
@@ -53,7 +53,7 @@ jobs:
           path: |
             build_full.log
             build_error.txt
-      - name: Upload APK if exists
+      - name: Upload APK
         if: always()
         uses: actions/upload-artifact@v4
         with:
