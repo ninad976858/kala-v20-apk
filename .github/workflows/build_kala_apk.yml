@@ -8,7 +8,8 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
       - run: |
-          sudo apt update && sudo apt install -y openjdk-17-jdk zip unzip
+          sudo apt update
+          sudo apt install -y openjdk-17-jdk zip unzip zlib1g-dev libffi-dev libssl-dev
           pip install buildozer cython==3.0.11
           cd kala_mobile_sample
           buildozer android debug
