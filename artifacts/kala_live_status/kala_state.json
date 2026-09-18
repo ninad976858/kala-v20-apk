@@ -1,0 +1,20 @@
+{
+  "identity": "60e8edbc",
+  "BC": 18287,
+  "HL": 18287,
+  "chain_ok": 18287,
+  "chain_bad": 0,
+  "total": 18287,
+  "maturity": "M1",
+  "decision": "SCAN_MARKET_EMPATHY",
+  "chain_ok_verified": true,
+  "last_repair": "V26_MINIMUM_SUFFICIENT_113M_BC_18287",
+  "timestamp": "2026-09-18T10:25:38.180937+05:30",
+  "evidence": {
+    "beat_chain": "data/state/beat_chain.jsonl 18287 lines",
+    "last_bc_from_chain": 18287,
+    "index_rail": "KALA_LAYER2_DATA 1 file 387KB bhavcopy_20260904.csv 3507 lines REAL - fake REAL_EXTERNAL removed",
+    "core_final": "113M ~/kala + 8.0G archive 98.5% reduction V20 LEVELS 1-4 VERIFIED",
+    "tiers": "T0 7.9M chain 18287 T1 1.1M daily 10 T2 208K inbox 1 T3 387K bhavcopy 1 T4 8.0G archive"
+  }
+}

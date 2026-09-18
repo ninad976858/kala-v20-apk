@@ -1,0 +1,18 @@
+name: KALA-SAMPLE-APK
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: |
+          sudo apt update && sudo apt install -y openjdk-17-jdk zip unzip
+          pip install buildozer cython==3.0.11
+          cd kala_mobile_sample
+          buildozer android debug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kala-sample-apk
+          path: kala_mobile_sample/bin/*.apk
